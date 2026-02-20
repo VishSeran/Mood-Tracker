@@ -48,7 +48,7 @@ public class MoodTracker {
 
     }
 
-    private static void CreateMood(ArrayList<Mood> moodlist) {
+    private static void CreateMood (ArrayList<Mood> moodlist) throws InvalidMoodException {
 
         try {
 
@@ -56,6 +56,8 @@ public class MoodTracker {
             System.out.println("Enter name: ");
             String name = scanner.nextLine();
             String trimName = name.trim();
+
+            Mood mood;
 
             if (!trimName.isEmpty()) {
 
@@ -84,28 +86,37 @@ public class MoodTracker {
 
                 if (userDate.isEmpty() && userTime.isEmpty() && notes.isEmpty()) {
 
-                    Mood mood = new Mood(name);
+                    mood = new Mood(name);
                     System.out.println("New mood created! " + mood);
-                    moodlist.add(mood);
 
                 } else if (userTime.isEmpty() && notes.isEmpty()) {
 
-                    Mood mood = new Mood(name, date);
+                    mood = new Mood(name, date);
                     System.out.println("New mood created! " + mood);
-                    moodlist.add(mood);
+
                 } else if (notes.isEmpty()) {
-                    Mood mood = new Mood(name, date, time);
+
+                    mood = new Mood(name, date, time);
                     System.out.println("New mood created! " + mood);
-                    moodlist.add(mood);
+
                 } else if (userDate.isEmpty() & userTime.isEmpty()) {
-                    Mood mood = new Mood(name, notes);
+
+                    mood = new Mood(name, notes);
                     System.out.println("New mood created! " + mood);
-                    moodlist.add(mood);
 
                 } else {
-                    Mood mood = new Mood(name, date, time, notes);
+
+                    mood = new Mood(name, date, time, notes);
                     System.out.println("New mood created! " + mood);
+
+                }
+
+                boolean isValid = isValidMood(moodlist, mood);
+
+                if (isValid) {
                     moodlist.add(mood);
+                    System.out.println("The mood has been added to the tracker");
+                    
                 }
 
             } else {
@@ -116,5 +127,15 @@ public class MoodTracker {
             System.out.println("Invalid date ot time!");
         }
 
+    }
+
+    private static boolean isValidMood(ArrayList<Mood> moodlist, Mood mood) throws InvalidMoodException {
+
+        for (Mood moodItem : moodlist) {
+            if (moodItem.equals(mood)) {
+                throw new InvalidMoodException();
+            }
+        }
+        return true;
     }
 }
