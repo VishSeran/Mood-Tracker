@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MoodTracker {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidMoodException {
 
         ArrayList<Mood> moodsList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
