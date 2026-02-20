@@ -48,4 +48,40 @@ public class Mood {
         this.notes = notes;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        System.out.println("Name setted successfully " + this.name);
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+        System.out.println("Name setted successfully " + this.notes);
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+        System.out.println("Date setted successfully " + this.date);
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+        System.out.println("Time setted successfully " + this.time);
+    }
+
 }
