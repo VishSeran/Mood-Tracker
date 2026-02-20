@@ -39,8 +39,7 @@ public class MoodTracker {
 
             switch (choice) {
                 case 1:
-                    Mood newMood = CreateMood();
-                    moodsList.add(newMood);
+                    CreateMood(moodsList);
                     break;
                 default:
                     throw new AssertionError();
@@ -49,49 +48,73 @@ public class MoodTracker {
 
     }
 
-    private static Mood CreateMood() {
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter name: ");
-        String name = scanner.nextLine();
-
-        if (name.trim().isEmpty()) {
-            System.out.println("Name cannot be empty!");
-            scanner.close();
-            return null;
-        }
-
-        System.out.println("\nEnter date (DD/MM/YYY) or Enter to skip: ");
-        String userDate = scanner.nextLine();
-        LocalDate date = null;
-
-        System.out.println("\nEnter time (HH-mm-ss) or Enter to skip: ");
-        String userTime = scanner.nextLine();
-        LocalTime time = null;
-
-        System.out.println("\nEnter notes or Enter to skip:");
-        String notes = scanner.nextLine();
+    private static void CreateMood(ArrayList<Mood> moodlist) {
 
         try {
-            if (!userDate.isEmpty()) {
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("DD/MM/YYYY");
-                date = LocalDate.parse(userDate, dateFormatter);
-            }
 
-            if (!userTime.isEmpty()) {
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH-mm-ss");
-                time = LocalTime.parse(userTime, timeFormatter);
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            String trimName = name.trim();
+
+            if (!trimName.isEmpty()) {
+
+                System.out.println("\nEnter date (DD/MM/YYY): ");
+                String userDate = scanner.nextLine();
+
+                LocalDate date = null;
+
+                if (!userDate.isEmpty()) {
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    date = LocalDate.parse(userDate, dateFormatter);
+                }
+
+                System.out.println("\nEnter time (HH-mm-ss): ");
+                String userTime = scanner.nextLine();
+
+                LocalTime time = null;
+
+                if (!userTime.isEmpty()) {
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH-mm-ss");
+                    time = LocalTime.parse(userTime, timeFormatter);
+                }
+
+                System.out.println("\nEnter notes:");
+                String notes = scanner.nextLine();
+
+                if (userDate.isEmpty() && userTime.isEmpty() && notes.isEmpty()) {
+
+                    Mood mood = new Mood(name);
+                    System.out.println("New mood created! " + mood);
+                    moodlist.add(mood);
+
+                } else if (userTime.isEmpty() && notes.isEmpty()) {
+
+                    Mood mood = new Mood(name, date);
+                    System.out.println("New mood created! " + mood);
+                    moodlist.add(mood);
+                } else if (notes.isEmpty()) {
+                    Mood mood = new Mood(name, date, time);
+                    System.out.println("New mood created! " + mood);
+                    moodlist.add(mood);
+                } else if (userDate.isEmpty() & userTime.isEmpty()) {
+                    Mood mood = new Mood(name, notes);
+                    System.out.println("New mood created! " + mood);
+                    moodlist.add(mood);
+
+                } else {
+                    Mood mood = new Mood(name, date, time, notes);
+                    System.out.println("New mood created! " + mood);
+                    moodlist.add(mood);
+                }
+
+            } else {
+                System.out.println("Name cannot be empty!");
             }
 
         } catch (DateTimeException e) {
-            System.out.println("Invalid date or time");
+            System.out.println("Invalid date ot time!");
         }
-
-        scanner.close();
-        Mood mood = new Mood(name, date, time, notes);
-        System.out.println("New mood created! " + mood);
-
-        return mood;
 
     }
 }
