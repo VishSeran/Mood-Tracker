@@ -84,4 +84,22 @@ public class Mood {
         System.out.println("Time setted successfully " + this.time);
     }
 
+    @Override
+    public String toString() {
+        return "name: " + name + "\nCreated Day: " + date + "\n Created time: "
+                + time + "\n Note: " + notes;
+    }
+
+    public boolean equals(Mood mood) {
+
+        if (mood.name.equalsIgnoreCase(this.name)
+                && mood.notes.equalsIgnoreCase(this.notes)
+                && mood.date.isEqual(this.date) && mood.time.equals(this.time)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }
