@@ -45,6 +45,10 @@ public class MoodTracker {
                 case 2:
                     viewAllMoods(moodsList);
                     break;
+
+                case 3:
+                    searchByMood(moodsList, scanner);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -160,6 +164,38 @@ public class MoodTracker {
             System.out.println(count +  ". " + mood);
             count ++;
         }
+
+        System.out.println("\nMoods are successfully retreiwed");
+
+    }
+
+    private static void searchByMood(ArrayList<Mood> moodList, Scanner scanner){
+
+        boolean isRunning = true;
+        int choice;
+        
+        while(isRunning){
+            System.out.println("\npress 1: Search by Name");
+            System.out.println("press 2: Search by Date");
+            System.out.println("press 3: Search by Time");
+            System.out.println("press 4: Search by All");
+            System.out.println("press 7: Exit\n");
+
+            System.out.println("\n Enter your choice: ");
+            choice = Integer.parseInt(scanner.nextLine());
+
+            switch(choice){
+                case 1:
+                    searchByName(moodList);
+                    break;
+            }
+
+
+        }
+
+    }
+
+    private static void searchByName(ArrayList<Mood> moodList){
 
     }
 }
