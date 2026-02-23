@@ -179,10 +179,15 @@ public class MoodTracker {
             System.out.println("press 2: Search by Date");
             System.out.println("press 3: Search by Time");
             System.out.println("press 4: Search by All");
-            System.out.println("press 7: Exit\n");
+            System.out.println("press 5: Exit\n");
 
             System.out.println("\n Enter your choice: ");
             choice = Integer.parseInt(scanner.nextLine());
+
+            if(choice == 5){
+                isRunning = false;
+                return;
+            }
 
             switch(choice){
                 case 1:
@@ -197,5 +202,9 @@ public class MoodTracker {
 
     private static void searchByName(ArrayList<Mood> moodList){
 
+        if(moodList.isEmpty()){
+            System.out.println("Moods List is Empty!");
+            return;
+        }
     }
 }
