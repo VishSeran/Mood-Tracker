@@ -41,6 +41,10 @@ public class MoodTracker {
                 case 1:
                     CreateMood(moodsList);
                     break;
+
+                case 2:
+                    viewAllMoods(moodsList);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -140,5 +144,22 @@ public class MoodTracker {
             }
         }
         return true;
+    }
+
+    private static void viewAllMoods(ArrayList<Mood> moodList){ 
+
+        if(moodList.isEmpty()){
+            System.out.println("No moods are entered yet!");
+            return;
+        }
+
+        int count  = 1;
+        boolean isSucceed = false;
+
+        for (Mood mood : moodList){
+            System.out.println(count +  ". " + mood);
+            count ++;
+        }
+
     }
 }
