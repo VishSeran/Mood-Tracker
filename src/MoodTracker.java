@@ -56,7 +56,7 @@ public class MoodTracker {
 
     }
 
-    private static void CreateMood (ArrayList<Mood> moodlist) throws InvalidMoodException {
+    private static void CreateMood(ArrayList<Mood> moodlist) throws InvalidMoodException {
 
         try {
 
@@ -95,27 +95,22 @@ public class MoodTracker {
                 if (userDate.isEmpty() && userTime.isEmpty() && notes.isEmpty()) {
 
                     mood = new Mood(name);
-                    
 
                 } else if (userTime.isEmpty() && notes.isEmpty()) {
 
                     mood = new Mood(name, date);
-                    
 
                 } else if (notes.isEmpty()) {
 
                     mood = new Mood(name, date, time);
-                    
 
                 } else if (userDate.isEmpty() & userTime.isEmpty()) {
 
                     mood = new Mood(name, notes);
-                  
 
                 } else {
 
                     mood = new Mood(name, date, time, notes);
-                    
 
                 }
 
@@ -134,7 +129,7 @@ public class MoodTracker {
 
         } catch (DateTimeException e) {
             System.out.println("Invalid date ot time!");
-        }catch( InvalidMoodException e){
+        } catch (InvalidMoodException e) {
             System.out.println("The mood is not valid");
         }
 
@@ -150,61 +145,82 @@ public class MoodTracker {
         return true;
     }
 
-    private static void viewAllMoods(ArrayList<Mood> moodList){ 
+    private static void viewAllMoods(ArrayList<Mood> moodList) {
 
-        if(moodList.isEmpty()){
+        if (moodList.isEmpty()) {
             System.out.println("No moods are entered yet!");
             return;
         }
 
-        int count  = 1;
+        int count = 1;
         boolean isSucceed = false;
 
-        for (Mood mood : moodList){
-            System.out.println(count +  ". " + mood);
-            count ++;
+        for (Mood mood : moodList) {
+            System.out.println(count + ". " + mood);
+            count++;
         }
 
         System.out.println("\nMoods are successfully retreiwed");
 
     }
 
-    private static void searchByMood(ArrayList<Mood> moodList, Scanner scanner){
+    private static void searchByMood(ArrayList<Mood> moodList, Scanner scanner) {
 
         boolean isRunning = true;
         int choice;
-        
-        while(isRunning){
-            System.out.println("\npress 1: Search by Name");
-            System.out.println("press 2: Search by Date");
-            System.out.println("press 3: Search by Time");
-            System.out.println("press 4: Search by All");
-            System.out.println("press 5: Exit\n");
 
-            System.out.println("\n Enter your choice: ");
-            choice = Integer.parseInt(scanner.nextLine());
+        try {
+            while (isRunning) {
+                System.out.println("\npress 1: Search by Name");
+                System.out.println("press 2: Search by Date");
+                System.out.println("press 3: Search by Time");
+                System.out.println("press 4: Search by All");
+                System.out.println("press 5: Exit\n");
 
-            if(choice == 5){
-                isRunning = false;
-                return;
+                System.out.println("\n Enter your choice: ");
+                choice = Integer.parseInt(scanner.nextLine());
+
+                if (choice == 5) {
+                    isRunning = false;
+                    return;
+                }
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Enter the mood name: ");
+                        String name = scanner.nextLine();
+                        searchByName(moodList, name);
+                        break;
+                }
+
             }
-
-            switch(choice){
-                case 1:
-                    searchByName(moodList);
-                    break;
-            }
-
-
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number input " + e.getMessage());
         }
 
     }
 
-    private static void searchByName(ArrayList<Mood> moodList){
+    private static void searchByName(ArrayList<Mood> moodList, String name) {
 
-        if(moodList.isEmpty()){
+        if (moodList.isEmpty()) {
             System.out.println("Moods List is Empty!");
             return;
         }
+
+        boolean found = false;
+
+        for(Mood mood: moodList){
+             if(mood.getName().equalsIgnoreCase(name)){
+
+                found = true;
+                System.out.println("Mood found!\n");
+                System.out.println(mood);
+             }
+        }
+
+        if(found == false){
+            System.out.println("Mood not found!");
+        }
+
     }
 }
